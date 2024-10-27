@@ -1,23 +1,31 @@
-import logo from './logo.svg';
 import './App.css';
-
+import React, { useState } from 'react';
+import NavBar from './components/NavBar';
+import MainPage from './components/MainPage';
+import {BrowserRouter, Route, Routes } from 'react-router-dom';
+import Contact from './components/Contact';
+import Information from './components/Information';
+import Footer from './components/Footer';
+import Header from './components/Header';
 function App() {
+  const [headerText, setHeaderText] = useState("Hello World");
+
+  const changeHeaderText = (newText) => {
+    setHeaderText(newText);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavBar/>
+      <Header text={headerText} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/main" element={<MainPage changeHeaderText={changeHeaderText} />}/>
+          <Route path="/contact" element={<Contact/>}/>
+          <Route path="/information" element={<Information/>}/>
+        </Routes>
+      </BrowserRouter>
+      <Footer/>
     </div>
   );
 }
